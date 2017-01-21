@@ -1,0 +1,54 @@
+<view class="searchLetter touchClass" style="height:{{scrollHeight}}px">
+    <view wx:for="{{searchLetter}}" style="height:{{itemH}}px" wx:key="index" data-letter="{{item.name}}" catchtouchstart="searchStart" catchtouchmove="searchMove" catchtouchend="searchEnd">{{item.name}}</view>
+</view>
+
+<block wx:if="{{isShowLetter}}">
+<view class="showSlectedLetter">
+    <text>{{showLetter}}</text>
+</view>
+</block>
+
+<view class="searchBar">
+    <image src="/image/search.png"/>
+    <input bindinput="bindinput" bindfocus="bindfocus" bindblur="bindblur" placeholder="搜索"/>
+</view>
+<block wx:if="{{isSearchFocus}}">
+    <block wx:if="{{!isSearchInput}}">
+        <view style="height:{{scrollHeight}}px;background-color: rgba(0, 0, 0,0.5);" class="searchBarView"></view>
+    </block>
+    <block wx:elif="{{searchBarList.length == 0}}">
+        <view style="height:{{scrollHeight}}px;background-color: #fff;" class="searchBarView">
+            <text>没有找到该城市</text>
+        </view>
+    </block>
+    <block wx:else>
+        <view style="height:{{scrollHeight}}px;background-color: #fff;" class="searchBarView">
+            <view class="item_city" wx:for="{{searchBarList}}" wx:for-item="ct" wx:key="{{ct.id}}" data-city="{{ct.city}}" bindtap="bindCity">
+                <text>{{ct.city}}</text>
+            </view>
+        </view>
+    </block>
+</block>
+
+<scroll-view scroll-y="true" style="height:{{scrollHeight}}px" bindscroll="bindScroll" scroll-top="{{scrollTop}}" scroll-into-view="{{scrollIntoView}}">
+    <view id="top" class="selection">
+        <view class="item_letter">定位城市</view>
+        <view class="item_city" bindtap="bindLocationCity">
+            <text class="{{location.class}}">{{location.name}}</text>
+        </view>
+    </view>
+    <view class="selection">
+        <view class="item_letter">热门城市</view>
+        <view class="hot_city">
+            <view class="item_hot_city" wx:for="{{hotCityList}}" wx:key="{{item}}" bindtap="bindCity" data-city="{{item}}">
+                <text>{{item}}</text>
+            </view>
+        </view>
+    </view>
+    <view id="{{item.initial}}" class="selection" wx:for="{{cityList}}" wx:key="{{item.initial}}">
+        <view class="item_letter">{{item.initial}}</view>
+        <view class="item_city" wx:for="{{item.cityInfo}}" wx:for-item="ct" wx:key="{{ct.id}}" data-city="{{ct.city}}" bindtap="bindCity">
+              <text>{{ct.city}}</text>
+        </view>
+    </view>
+</scroll-view>
