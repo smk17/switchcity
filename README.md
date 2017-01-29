@@ -100,7 +100,7 @@ function searchCity(city){
 
 ### 效果图：
 
-![demo](http://smk17.cn/96/demo.gif)
+![demo](demo.gif)
 
 ### 已知bug：
 
